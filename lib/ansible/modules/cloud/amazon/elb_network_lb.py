@@ -809,6 +809,7 @@ def create_or_update_elb(connection, connection_ec2, module):
     params['Subnets'] = module.params.get("subnets")
     subnet_mappings = module.params.get("subnet_mappings")
     params['Scheme'] = module.params.get("scheme")
+    params['Type'] = 'network'
     if module.params.get("tags"):
         params['Tags'] = ansible_dict_to_boto3_tag_list(module.params.get("tags"))
     purge_tags = module.params.get("purge_tags")
