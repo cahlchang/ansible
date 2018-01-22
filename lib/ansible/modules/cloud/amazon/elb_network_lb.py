@@ -846,13 +846,6 @@ def create_or_update_elb(connection, connection_ec2, module):
 
 
 
-        # Security Groups
-        if set(elb['SecurityGroups']) != set(params['SecurityGroups']):
-            try:
-                connection.set_security_groups(LoadBalancerArn=elb['LoadBalancerArn'], SecurityGroups=params['SecurityGroups'])
-            except ClientError as e:
-                module.fail_json(msg=e.message, exception=traceback.format_exc(), **camel_dict_to_snake_dict(e.response))
-            changed = True
 
         # Tags - only need to play with tags if tags parameter has been set to something
         if module.params.get("tags"):
