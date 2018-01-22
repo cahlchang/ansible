@@ -834,18 +834,15 @@ def create_or_update_elb(connection, connection_ec2, module):
             changed = True
 
         # Subnet Mappings
-        mappings_to_modify = []
-        for mapping in subnet_mappings:
-            for az in elb['AvailabilityZones']:
-                if mapping['SubnetId'] == az['SubnetId'] and mapping['AllocationId'] == az['LoadBalancerAddresses'][0]['AllocationId']:
-                    mapping_found = True
+        if subnet_mappings:
+            mappings_to_modify = []
+            for mapping in subnet_mappings:
+                for az in elb['AvailabilityZones']:
+                    if mapping['SubnetId'] == az['SubnetId'] and mapping['AllocationId'] == az['LoadBalancerAddresses'][0]['AllocationId']:
+                        mapping_found = True
 
-            if not mapping_found:
-                mappings_to_modify.append(mapping)
-
-
-
-
+                if not mapping_found:
+                    mappings_to_modify.append(mapping)
 
         # Tags - only need to play with tags if tags parameter has been set to something
         if module.params.get("tags"):
