@@ -888,7 +888,7 @@ def create_or_update_elb(connection, connection_ec2, module):
 
     if access_logs_enabled and current_elb_attributes['access_logs_s3_enabled'] != "true":
         update_attributes.append({'Key': 'access_logs.s3.enabled', 'Value': "true"})
-    if not access_logs_enabled and current_elb_attributes['access_logs_s3_enabled'] != "false":
+    if not access_logs_enabled and 'access_logs_s3_enabled' in current_elb_attributes and current_elb_attributes['access_logs_s3_enabled'] != "false":
         update_attributes.append({'Key': 'access_logs.s3.enabled', 'Value': 'false'})
     if access_logs_s3_bucket is not None and access_logs_s3_bucket != current_elb_attributes['access_logs_s3_bucket']:
         update_attributes.append({'Key': 'access_logs.s3.bucket', 'Value': access_logs_s3_bucket})
